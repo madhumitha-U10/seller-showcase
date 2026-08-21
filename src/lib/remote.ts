@@ -29,7 +29,10 @@ const bool = (v: unknown) => /^(true|yes|1|y)$/i.test(String(v ?? "").trim());
 const today = () => new Date().toISOString().slice(0, 10);
 
 export const slugify = (s: string) =>
-  s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "item";
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") || "item";
 
 const pick = (row: SheetRow, ...keys: string[]) => {
   for (const k of keys) {
@@ -76,7 +79,8 @@ function mapCategory(row: SheetRow): Category {
 }
 
 function mapProduct(row: SheetRow): Product {
-  const type = str(pick(row, "type"), "product").toLowerCase() === "service" ? "service" : "product";
+  const type =
+    str(pick(row, "type"), "product").toLowerCase() === "service" ? "service" : "product";
   return {
     id: str(pick(row, "productId", "id"), `p_${Math.random().toString(36).slice(2, 8)}`),
     sellerId: str(pick(row, "sellerId", "seller")),
@@ -271,7 +275,12 @@ export function loadRemote(force = false): Promise<RemoteData> {
   if (!force && inflight) return inflight;
 
   const cached = readCache();
-  if (!force && cached && Date.now() - cached.at < CACHE_TTL && (cached.rows["sellers"]?.length ?? 0) >= 0) {
+  if (
+    !force &&
+    cached &&
+    Date.now() - cached.at < CACHE_TTL &&
+    (cached.rows["sellers"]?.length ?? 0) >= 0
+  ) {
     rawRows = cached.rows;
     cache = build(rawRows, null);
     if (Date.now() - cached.at > 60_000) void revalidate();

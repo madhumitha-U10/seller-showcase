@@ -20,11 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { categories, registerSeller } from "@/lib/api";
 import { useStoreData } from "@/hooks/use-store-data";
 import { setSession } from "@/lib/session";
-import {
-  signUpSeller,
-  validateNammaspotId,
-  validatePassword,
-} from "@/lib/seller-auth";
+import { signUpSeller, validateNammaspotId, validatePassword } from "@/lib/seller-auth";
 
 export const Route = createFileRoute("/seller/register")({
   head: () => ({
@@ -55,7 +51,10 @@ const schema = z.object({
   area: z.string().trim().min(2, "Enter your area").max(60),
   city: z.string().trim().min(2).max(40),
   instagram: z.string().trim().min(2, "Instagram handle is required").max(40),
-  whatsapp: z.string().trim().regex(/^[0-9]{10,15}$/, "Digits only, with country code"),
+  whatsapp: z
+    .string()
+    .trim()
+    .regex(/^[0-9]{10,15}$/, "Digits only, with country code"),
   email: z.string().trim().email("Enter a valid email").max(120),
   tagline: z.string().trim().min(6, "One line about your business").max(120),
   about: z.string().trim().min(20, "Tell customers a bit more").max(1000),
@@ -177,10 +176,14 @@ function RegisterSeller() {
             <div>
               <Label>Category</Label>
               <Select value={categoryId} onValueChange={setCategoryId}>
-                <SelectTrigger className="mt-1.5"><SelectValue placeholder="Select category" /></SelectTrigger>
+                <SelectTrigger className="mt-1.5">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
                 <SelectContent>
                   {(cats ?? []).map((c) => (
-                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -188,22 +191,48 @@ function RegisterSeller() {
             </div>
             <div>
               <Label htmlFor="area">Area</Label>
-              <Input id="area" name="area" placeholder="Anna Nagar" className="mt-1.5" maxLength={60} />
+              <Input
+                id="area"
+                name="area"
+                placeholder="Anna Nagar"
+                className="mt-1.5"
+                maxLength={60}
+              />
               {err("area")}
             </div>
             <div>
               <Label htmlFor="city">City</Label>
-              <Input id="city" name="city" placeholder="Chennai" defaultValue="Chennai" className="mt-1.5" maxLength={40} />
+              <Input
+                id="city"
+                name="city"
+                placeholder="Chennai"
+                defaultValue="Chennai"
+                className="mt-1.5"
+                maxLength={40}
+              />
               {err("city")}
             </div>
             <div>
               <Label htmlFor="instagram">Instagram handle</Label>
-              <Input id="instagram" name="instagram" placeholder="ammaveedubakes" className="mt-1.5" maxLength={40} />
+              <Input
+                id="instagram"
+                name="instagram"
+                placeholder="ammaveedubakes"
+                className="mt-1.5"
+                maxLength={40}
+              />
               {err("instagram")}
             </div>
             <div>
               <Label htmlFor="whatsapp">WhatsApp (with 91)</Label>
-              <Input id="whatsapp" name="whatsapp" inputMode="numeric" placeholder="919840112233" className="mt-1.5" maxLength={15} />
+              <Input
+                id="whatsapp"
+                name="whatsapp"
+                inputMode="numeric"
+                placeholder="919840112233"
+                className="mt-1.5"
+                maxLength={15}
+              />
               {err("whatsapp")}
             </div>
             <div>
@@ -213,7 +242,13 @@ function RegisterSeller() {
             </div>
             <div>
               <Label htmlFor="priceFrom">Starting price (₹)</Label>
-              <Input id="priceFrom" name="priceFrom" inputMode="numeric" defaultValue="500" className="mt-1.5" />
+              <Input
+                id="priceFrom"
+                name="priceFrom"
+                inputMode="numeric"
+                defaultValue="500"
+                className="mt-1.5"
+              />
               {err("priceFrom")}
             </div>
           </div>
@@ -276,7 +311,10 @@ function RegisterSeller() {
             {busy ? "Creating…" : "Create my profile"}
           </Button>
           <p className="text-center text-xs text-muted-foreground">
-            Already listed? <Link to="/seller/login" className="text-primary hover:underline">Seller login</Link>
+            Already listed?{" "}
+            <Link to="/seller/login" className="text-primary hover:underline">
+              Seller login
+            </Link>
           </p>
         </form>
       </div>

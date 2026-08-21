@@ -49,7 +49,10 @@ function Featured() {
         <h2 className="mt-12 text-xl font-extrabold">Top rated overall</h2>
         <div className="card-soft mt-4 divide-y divide-border">
           {topRated.map((s, i) => (
-            <div key={s.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
+            <div
+              key={s.id}
+              className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3"
+            >
               <span className="w-6 shrink-0 font-display text-lg font-extrabold text-primary">
                 {i + 1}
               </span>

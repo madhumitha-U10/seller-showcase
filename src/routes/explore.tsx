@@ -46,7 +46,8 @@ export const Route = createFileRoute("/explore")({
       { property: "og:title", content: "Explore Chennai Sellers — NammaSpot" },
       {
         property: "og:description",
-        content: "Filter local Tamil Nadu makers by craft, neighbourhood, rating and starting price.",
+        content:
+          "Filter local Tamil Nadu makers by craft, neighbourhood, rating and starting price.",
       },
     ],
   }),
@@ -97,11 +98,15 @@ function Explore() {
               value={search.category ?? ALL}
               onValueChange={(v) => set({ category: v === ALL ? undefined : v })}
             >
-              <SelectTrigger aria-label="Category"><SelectValue placeholder="Category" /></SelectTrigger>
+              <SelectTrigger aria-label="Category">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>All categories</SelectItem>
                 {cats.map((c) => (
-                  <SelectItem key={c.id} value={c.slug}>{c.name}</SelectItem>
+                  <SelectItem key={c.id} value={c.slug}>
+                    {c.name}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -110,11 +115,15 @@ function Explore() {
               value={search.area ?? ALL}
               onValueChange={(v) => set({ area: v === ALL ? undefined : v })}
             >
-              <SelectTrigger aria-label="Area"><SelectValue placeholder="Area" /></SelectTrigger>
+              <SelectTrigger aria-label="Area">
+                <SelectValue placeholder="Area" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>All areas</SelectItem>
                 {(areaList ?? []).map((a) => (
-                  <SelectItem key={a} value={a}>{a}</SelectItem>
+                  <SelectItem key={a} value={a}>
+                    {a}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -123,7 +132,9 @@ function Explore() {
               value={search.minRating ? String(search.minRating) : ALL}
               onValueChange={(v) => set({ minRating: v === ALL ? undefined : Number(v) })}
             >
-              <SelectTrigger aria-label="Rating"><SelectValue placeholder="Rating" /></SelectTrigger>
+              <SelectTrigger aria-label="Rating">
+                <SelectValue placeholder="Rating" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>Any rating</SelectItem>
                 <SelectItem value="4.5">4.5+</SelectItem>
@@ -135,7 +146,9 @@ function Explore() {
               value={search.sort ?? "featured"}
               onValueChange={(v) => set({ sort: v as ExploreSearch["sort"] })}
             >
-              <SelectTrigger aria-label="Sort"><SelectValue placeholder="Sort" /></SelectTrigger>
+              <SelectTrigger aria-label="Sort">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="featured">Featured first</SelectItem>
                 <SelectItem value="rating">Top rated</SelectItem>
@@ -150,7 +163,9 @@ function Explore() {
               value={search.maxPrice ? String(search.maxPrice) : ALL}
               onValueChange={(v) => set({ maxPrice: v === ALL ? undefined : Number(v) })}
             >
-              <SelectTrigger aria-label="Budget"><SelectValue placeholder="Budget" /></SelectTrigger>
+              <SelectTrigger aria-label="Budget">
+                <SelectValue placeholder="Budget" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>Any budget</SelectItem>
                 <SelectItem value="500">Starts under ₹500</SelectItem>
@@ -162,9 +177,7 @@ function Explore() {
               <Button
                 variant="ghost"
                 className="justify-start gap-2 text-primary"
-                onClick={() =>
-                  navigate({ search: { q: search.q, sort: search.sort } })
-                }
+                onClick={() => navigate({ search: { q: search.q, sort: search.sort } })}
               >
                 <X className="size-4" /> Clear {activeCount} filter{activeCount > 1 ? "s" : ""}
               </Button>

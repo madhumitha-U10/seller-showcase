@@ -1,13 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import {
-  CalendarDays,
-  Instagram,
-  MapPin,
-  MessageCircle,
-  Phone,
-  Share2,
-  Truck,
-} from "lucide-react";
+import { CalendarDays, Instagram, MapPin, MessageCircle, Phone, Share2, Truck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -46,7 +38,9 @@ export const Route = createFileRoute("/seller/$slug")({
   },
   head: ({ params }) => {
     const seller = SELLERS.find((s) => s.slug === params.slug);
-    const title = seller ? `${seller.businessName} — ${seller.area}, Chennai | NammaSpot` : "Seller — NammaSpot";
+    const title = seller
+      ? `${seller.businessName} — ${seller.area}, Chennai | NammaSpot`
+      : "Seller — NammaSpot";
     const description = seller
       ? `${seller.tagline}. View the catalogue, reviews and send an enquiry to ${seller.businessName} in ${seller.area}.`
       : "Seller profile on NammaSpot.";
@@ -243,7 +237,9 @@ function SellerProfile() {
             <p className="text-sm leading-relaxed text-muted-foreground">{seller.about}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {seller.tags.map((t) => (
-                <Badge key={t} variant="secondary">{t}</Badge>
+                <Badge key={t} variant="secondary">
+                  {t}
+                </Badge>
               ))}
             </div>
             <dl className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -252,7 +248,9 @@ function SellerProfile() {
                 <dd className="mt-1 text-sm font-semibold">{seller.ownerName}</dd>
               </div>
               <div className="card-soft p-4">
-                <dt className="text-xs uppercase tracking-widest text-muted-foreground">Starts from</dt>
+                <dt className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Starts from
+                </dt>
                 <dd className="mt-1 text-sm font-semibold">{inr(seller.priceFrom)}</dd>
               </div>
               <div className="card-soft p-4">
@@ -260,7 +258,9 @@ function SellerProfile() {
                 <dd className="mt-1 break-all text-sm font-semibold">{seller.email}</dd>
               </div>
               <div className="card-soft p-4">
-                <dt className="text-xs uppercase tracking-widest text-muted-foreground">On NammaSpot since</dt>
+                <dt className="text-xs uppercase tracking-widest text-muted-foreground">
+                  On NammaSpot since
+                </dt>
                 <dd className="mt-1 text-sm font-semibold">{seller.createdAt}</dd>
               </div>
             </dl>
@@ -379,7 +379,9 @@ function EnquiryForm({
         <div>
           <Label htmlFor="message">What do you need?</Label>
           <Textarea id="message" name="message" rows={4} maxLength={1000} className="mt-1.5" />
-          {errors["message"] && <p className="mt-1 text-xs text-destructive">{errors["message"]}</p>}
+          {errors["message"] && (
+            <p className="mt-1 text-xs text-destructive">{errors["message"]}</p>
+          )}
         </div>
         <Button type="submit" className="w-full rounded-full sm:w-auto">
           Send enquiry

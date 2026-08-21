@@ -51,7 +51,9 @@ function SellerLogin() {
       return;
     }
     if (!result.sellerId) {
-      setErrors({ form: "No seller profile is linked to this ID yet. Please register your business." });
+      setErrors({
+        form: "No seller profile is linked to this ID yet. Please register your business.",
+      });
       return;
     }
 

@@ -12,25 +12,63 @@ export function Footer() {
           <div className="mt-4 h-0.5 w-24 rule-maroon" />
         </div>
         <nav className="text-sm">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Explore</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Explore
+          </p>
           <ul className="space-y-2">
-            <li><Link to="/explore" className="hover:text-primary">Search sellers</Link></li>
-            <li><Link to="/categories" className="hover:text-primary">Categories</Link></li>
-            <li><Link to="/near-me" className="hover:text-primary">Near me</Link></li>
-            <li><Link to="/stories" className="hover:text-primary">Stories</Link></li>
+            <li>
+              <Link to="/explore" className="hover:text-primary">
+                Search sellers
+              </Link>
+            </li>
+            <li>
+              <Link to="/categories" className="hover:text-primary">
+                Categories
+              </Link>
+            </li>
+            <li>
+              <Link to="/near-me" className="hover:text-primary">
+                Near me
+              </Link>
+            </li>
+            <li>
+              <Link to="/stories" className="hover:text-primary">
+                Stories
+              </Link>
+            </li>
           </ul>
         </nav>
         <nav className="text-sm">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">For sellers</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            For sellers
+          </p>
           <ul className="space-y-2">
-            <li><Link to="/seller/register" className="hover:text-primary">List your business</Link></li>
-            <li><Link to="/seller/login" className="hover:text-primary">Seller login</Link></li>
-            <li><Link to="/seller/dashboard" className="hover:text-primary">Dashboard</Link></li>
-            <li><Link to="/admin" className="hover:text-primary">Admin console</Link></li>
+            <li>
+              <Link to="/seller/register" className="hover:text-primary">
+                List your business
+              </Link>
+            </li>
+            <li>
+              <Link to="/seller/login" className="hover:text-primary">
+                Seller login
+              </Link>
+            </li>
+            <li>
+              <Link to="/seller/dashboard" className="hover:text-primary">
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin" className="hover:text-primary">
+                Admin console
+              </Link>
+            </li>
           </ul>
         </nav>
         <div className="text-sm">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Community</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Community
+          </p>
           <ul className="space-y-2 text-muted-foreground">
             <li>Instagram</li>
             <li>YouTube</li>

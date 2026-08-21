@@ -72,7 +72,11 @@ function Admin() {
   if (!signedIn) {
     return (
       <SiteShell>
-        <PageHeading eyebrow="Admin" title="Admin login" subtitle="Restricted to the NammaSpot team." />
+        <PageHeading
+          eyebrow="Admin"
+          title="Admin login"
+          subtitle="Restricted to the NammaSpot team."
+        />
         <div className="mx-auto max-w-sm px-4 py-8 lg:px-6">
           <form
             className="card-soft space-y-4 p-5"
@@ -164,7 +168,11 @@ function Admin() {
                       </p>
                     </div>
                     <div className="flex shrink-0 gap-2">
-                      <Button size="sm" className="rounded-full" onClick={() => decide(s.id, "approved")}>
+                      <Button
+                        size="sm"
+                        className="rounded-full"
+                        onClick={() => decide(s.id, "approved")}
+                      >
                         <Check className="size-4" /> Approve
                       </Button>
                       <Button
@@ -187,7 +195,10 @@ function Admin() {
               {sellersLoading &&
                 [...Array(5)].map((_, i) => <SellerRowSkeleton key={`seller-skeleton-${i}`} />)}
               {all.map((s) => (
-                <div key={s.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4">
+                <div
+                  key={s.id}
+                  className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4"
+                >
                   <SellerAvatar name={s.businessName} src={s.imageUrl} size="sm" />
                   <div className="min-w-0">
                     <Link
@@ -206,11 +217,21 @@ function Admin() {
                       {s.status}
                     </Badge>
                     {s.status !== "approved" ? (
-                      <Button size="sm" variant="outline" className="rounded-full" onClick={() => decide(s.id, "approved")}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="rounded-full"
+                        onClick={() => decide(s.id, "approved")}
+                      >
                         Approve
                       </Button>
                     ) : (
-                      <Button size="sm" variant="ghost" className="rounded-full" onClick={() => decide(s.id, "rejected")}>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="rounded-full"
+                        onClick={() => decide(s.id, "rejected")}
+                      >
                         Suspend
                       </Button>
                     )}
@@ -265,7 +286,9 @@ function Admin() {
                         {e.phone} · event {e.eventDate || "—"} · {e.createdAt}
                       </p>
                     </div>
-                    <Badge variant="secondary" className="shrink-0">{e.status}</Badge>
+                    <Badge variant="secondary" className="shrink-0">
+                      {e.status}
+                    </Badge>
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">{e.message}</p>
                 </div>
