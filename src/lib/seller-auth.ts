@@ -90,7 +90,9 @@ export async function signUpSeller(input: {
     const dup = insertError.code === "23505";
     return {
       ok: false,
-      error: dup ? "That NammaSpot ID is already taken." : "Could not save your account. Try again.",
+      error: dup
+        ? "That NammaSpot ID is already taken."
+        : "Could not save your account. Try again.",
     };
   }
 
@@ -129,5 +131,8 @@ export async function signOutSeller() {
 export async function linkSellerProfile(sellerId: string) {
   const { data } = await supabase.auth.getUser();
   if (!data.user) return;
-  await supabase.from("seller_accounts").update({ seller_id: sellerId }).eq("user_id", data.user.id);
+  await supabase
+    .from("seller_accounts")
+    .update({ seller_id: sellerId })
+    .eq("user_id", data.user.id);
 }

@@ -7,7 +7,11 @@
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
-export function fileToCompressedDataUrl(file: File, maxSide = 640, quality = 0.72): Promise<string> {
+export function fileToCompressedDataUrl(
+  file: File,
+  maxSide = 640,
+  quality = 0.72,
+): Promise<string> {
   return new Promise((resolve, reject) => {
     if (!file.type.startsWith("image/")) {
       reject(new Error("Please choose an image file"));

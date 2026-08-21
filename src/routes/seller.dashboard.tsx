@@ -13,14 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-} from "recharts";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import { toast } from "sonner";
 
 import { SiteShell } from "@/components/site/SiteShell";
@@ -126,7 +119,9 @@ function Dashboard() {
             Seller dashboards are private to each business.
           </p>
           <div className="mt-6 flex justify-center gap-2">
-            <Button asChild className="rounded-full"><Link to="/seller/login">Seller login</Link></Button>
+            <Button asChild className="rounded-full">
+              <Link to="/seller/login">Seller login</Link>
+            </Button>
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/seller/register">Register</Link>
             </Button>
@@ -139,7 +134,9 @@ function Dashboard() {
   if (!seller) {
     return (
       <SiteShell>
-        <div className="mx-auto max-w-6xl px-4 py-24 text-sm text-muted-foreground">Loading dashboard…</div>
+        <div className="mx-auto max-w-6xl px-4 py-24 text-sm text-muted-foreground">
+          Loading dashboard…
+        </div>
       </SiteShell>
     );
   }
@@ -163,7 +160,9 @@ function Dashboard() {
           </div>
 
           {seller.status !== "approved" && (
-            <Badge variant="secondary" className="mt-3">Pending admin approval</Badge>
+            <Badge variant="secondary" className="mt-3">
+              Pending admin approval
+            </Badge>
           )}
 
           <nav className="mt-5 flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
@@ -213,7 +212,12 @@ function Dashboard() {
                   {[
                     { label: "Profile Views", value: "1,284", delta: "+12%", icon: Eye },
                     { label: "Catalogue Views", value: "864", delta: "+5%", icon: Boxes },
-                    { label: "New Enquiries", value: String(enq.filter((e) => e.status === "new").length), delta: "live", icon: MessageSquare },
+                    {
+                      label: "New Enquiries",
+                      value: String(enq.filter((e) => e.status === "new").length),
+                      delta: "live",
+                      icon: MessageSquare,
+                    },
                     { label: "Saved", value: "137", delta: "+18%", icon: Heart },
                   ].map((m) => (
                     <div key={m.label} className="card-soft p-4">
@@ -280,8 +284,8 @@ function Dashboard() {
                   <div className="space-y-2">
                     <p className="text-sm font-bold">Profile picture</p>
                     <p className="max-w-sm text-xs text-muted-foreground">
-                      Square photo, JPG or PNG under 5MB. This is what customers see on your
-                      profile and in search results.
+                      Square photo, JPG or PNG under 5MB. This is what customers see on your profile
+                      and in search results.
                     </p>
                     <div className="flex flex-wrap items-center gap-2">
                       <PhotoPicker
@@ -324,7 +328,11 @@ function Dashboard() {
                   </div>
                   <div>
                     <Label>Category</Label>
-                    <Input readOnly value={categoryById(seller.categoryId)?.name ?? ""} className="mt-1.5" />
+                    <Input
+                      readOnly
+                      value={categoryById(seller.categoryId)?.name ?? ""}
+                      className="mt-1.5"
+                    />
                   </div>
                   <div>
                     <Label>Area</Label>
@@ -353,7 +361,10 @@ function Dashboard() {
               <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
                 <div className="space-y-3">
                   {list.map((p) => (
-                    <div key={p.id} className="card-soft grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4">
+                    <div
+                      key={p.id}
+                      className="card-soft grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4"
+                    >
                       <PhotoPicker
                         src={p.imageUrl}
                         alt={p.name}
@@ -368,12 +379,16 @@ function Dashboard() {
                       />
                       <div className="min-w-0">
                         <p className="truncate text-sm font-bold">{p.name}</p>
-                        <p className="line-clamp-1 text-xs text-muted-foreground">{p.description}</p>
+                        <p className="line-clamp-1 text-xs text-muted-foreground">
+                          {p.description}
+                        </p>
                         <p className="mt-1 text-xs font-semibold text-primary">
                           {inr(p.price)} / {p.unit}
                         </p>
                       </div>
-                      <Badge variant="secondary" className="shrink-0 text-[10px] uppercase">{p.type}</Badge>
+                      <Badge variant="secondary" className="shrink-0 text-[10px] uppercase">
+                        {p.type}
+                      </Badge>
                     </div>
                   ))}
                 </div>
@@ -422,7 +437,10 @@ function Dashboard() {
             {section === "customers" && (
               <div className="card-soft divide-y divide-border">
                 {(customers ?? []).map((c) => (
-                  <div key={c.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4">
+                  <div
+                    key={c.id}
+                    className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 p-4"
+                  >
                     <PhotoPicker
                       src={c.avatarUrl}
                       alt={c.name}
@@ -436,7 +454,9 @@ function Dashboard() {
                     />
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold">{c.name}</p>
-                      <p className="text-xs text-muted-foreground">{c.phone} · {c.area}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {c.phone} · {c.area}
+                      </p>
                     </div>
                     <p className="shrink-0 text-xs text-muted-foreground">since {c.createdAt}</p>
                   </div>
@@ -456,7 +476,11 @@ function Dashboard() {
                   <Input defaultValue={seller.instagram} className="mt-1.5" />
                 </div>
                 <Button asChild variant="outline" className="mt-4 rounded-full">
-                  <a href={`https://instagram.com/${seller.instagram}`} target="_blank" rel="noreferrer">
+                  <a
+                    href={`https://instagram.com/${seller.instagram}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <Instagram className="size-4" /> Open profile
                   </a>
                 </Button>
@@ -509,7 +533,9 @@ function Dashboard() {
                 <div>
                   <Label>Delivery</Label>
                   <Select defaultValue={seller.deliversAcrossCity ? "city" : "area"}>
-                    <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
+                    <SelectTrigger className="mt-1.5">
+                      <SelectValue />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="city">Delivers across the city</SelectItem>
                       <SelectItem value="area">Local area / pickup only</SelectItem>
@@ -542,13 +568,7 @@ function Dashboard() {
   );
 }
 
-function AddProductForm({
-  sellerId,
-  onAdded,
-}: {
-  sellerId: string;
-  onAdded: () => void;
-}) {
+function AddProductForm({ sellerId, onAdded }: { sellerId: string; onAdded: () => void }) {
   const [type, setType] = useState<"product" | "service">("product");
   const [imageUrl, setImageUrl] = useState<string>("");
 
@@ -610,7 +630,9 @@ function AddProductForm({
       <div>
         <Label>Type</Label>
         <Select value={type} onValueChange={(v) => setType(v as "product" | "service")}>
-          <SelectTrigger className="mt-1.5"><SelectValue /></SelectTrigger>
+          <SelectTrigger className="mt-1.5">
+            <SelectValue />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="product">Product</SelectItem>
             <SelectItem value="service">Service</SelectItem>
@@ -621,7 +643,9 @@ function AddProductForm({
         <Label htmlFor="description">Description</Label>
         <Textarea id="description" name="description" rows={3} className="mt-1.5" maxLength={400} />
       </div>
-      <Button type="submit" className="w-full rounded-full">Add to catalogue</Button>
+      <Button type="submit" className="w-full rounded-full">
+        Add to catalogue
+      </Button>
     </form>
   );
 }

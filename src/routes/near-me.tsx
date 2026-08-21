@@ -9,8 +9,14 @@ import { useStoreData } from "@/hooks/use-store-data";
 import { approvedSellers } from "@/lib/api";
 
 const NEIGHBOURHOODS = [
-  "Mylapore", "Adyar", "Besant Nagar", "T Nagar", "Anna Nagar",
-  "Velachery", "Kodambakkam", "Villivakkam",
+  "Mylapore",
+  "Adyar",
+  "Besant Nagar",
+  "T Nagar",
+  "Anna Nagar",
+  "Velachery",
+  "Kodambakkam",
+  "Villivakkam",
 ];
 
 export const Route = createFileRoute("/near-me")({

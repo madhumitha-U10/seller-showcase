@@ -57,8 +57,8 @@ function Home() {
               <span className="text-primary">Namma Spot.</span>
             </h1>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Discover the authentic flavours, crafts and talents of Chennai's vibrant local
-              scene. Handcrafted by the community, for the community.
+              Discover the authentic flavours, crafts and talents of Chennai's vibrant local scene.
+              Handcrafted by the community, for the community.
             </p>
 
             <form
@@ -128,9 +128,21 @@ function Home() {
       <section className="border-b border-border bg-secondary/50">
         <div className="mx-auto grid max-w-6xl gap-4 px-4 py-6 sm:grid-cols-3 lg:px-6">
           {[
-            { icon: ShieldCheck, title: "Admin-verified sellers", copy: "Every profile is reviewed before it goes live." },
-            { icon: Instagram, title: "Instagram-first", copy: "Built for businesses that already sell through DMs." },
-            { icon: Sparkles, title: "Made in Tamil Nadu", copy: "Local artisans, local areas, local prices." },
+            {
+              icon: ShieldCheck,
+              title: "Admin-verified sellers",
+              copy: "Every profile is reviewed before it goes live.",
+            },
+            {
+              icon: Instagram,
+              title: "Instagram-first",
+              copy: "Built for businesses that already sell through DMs.",
+            },
+            {
+              icon: Sparkles,
+              title: "Made in Tamil Nadu",
+              copy: "Local artisans, local areas, local prices.",
+            },
           ].map(({ icon: Icon, title, copy }) => (
             <div key={title} className="flex gap-3">
               <Icon className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
@@ -148,9 +160,14 @@ function Home() {
         <div className="flex items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-extrabold sm:text-3xl">Browse by craft</h2>
-            <p className="mt-1 text-sm text-muted-foreground">Eight categories, hundreds of makers.</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Eight categories, hundreds of makers.
+            </p>
           </div>
-          <Link to="/categories" className="shrink-0 text-sm font-semibold text-primary hover:underline">
+          <Link
+            to="/categories"
+            className="shrink-0 text-sm font-semibold text-primary hover:underline"
+          >
             All categories
           </Link>
         </div>
@@ -175,7 +192,10 @@ function Home() {
         <div className="mx-auto max-w-6xl px-4 lg:px-6">
           <div className="flex items-end justify-between gap-4">
             <h2 className="text-2xl font-extrabold sm:text-3xl">Featured this week</h2>
-            <Link to="/featured" className="shrink-0 text-sm font-semibold text-primary hover:underline">
+            <Link
+              to="/featured"
+              className="shrink-0 text-sm font-semibold text-primary hover:underline"
+            >
               See all
             </Link>
           </div>
@@ -195,7 +215,10 @@ function Home() {
       <section className="mx-auto max-w-6xl px-4 py-12 lg:px-6">
         <div className="flex items-end justify-between gap-4">
           <h2 className="text-2xl font-extrabold sm:text-3xl">Stories from the neighbourhood</h2>
-          <Link to="/stories" className="shrink-0 text-sm font-semibold text-primary hover:underline">
+          <Link
+            to="/stories"
+            className="shrink-0 text-sm font-semibold text-primary hover:underline"
+          >
             Read more
           </Link>
         </div>

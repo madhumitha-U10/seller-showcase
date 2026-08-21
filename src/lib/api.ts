@@ -22,16 +22,7 @@ import {
 import { loadRemote, remoteSnapshot } from "@/lib/remote";
 import { appendSheetRow } from "@/lib/sheets.functions";
 
-export type {
-  Category,
-  Customer,
-  Enquiry,
-  Product,
-  Review,
-  Seller,
-  SellerStatus,
-  Story,
-};
+export type { Category, Customer, Enquiry, Product, Review, Seller, SellerStatus, Story };
 
 /** Loads Sellers/Products/Categories (and the prepared Customers/Enquiries/
  * Reviews tables) from the Google Sheets backend. Safe to call repeatedly. */
@@ -152,7 +143,6 @@ export function cleanupExpiredImages(): number {
   return removed;
 }
 
-
 /** Mirror a write to Google Sheets. Never blocks or breaks the UI. */
 function mirror(
   action: "addSeller" | "addProduct" | "addCustomer" | "addEnquiry" | "addReview",
@@ -224,18 +214,28 @@ export const productsBySeller = (sid: string) =>
   allProducts().filter((p) => p.sellerId === sid && p.active);
 export const reviewsBySeller = (sid: string) =>
   allReviews().filter((r) => r.sellerId === sid && r.approved);
-export const enquiriesBySeller = (sid: string) =>
-  allEnquiries().filter((e) => e.sellerId === sid);
+export const enquiriesBySeller = (sid: string) => allEnquiries().filter((e) => e.sellerId === sid);
 export const storiesBySeller = (sid: string) => stories().filter((s) => s.sellerId === sid);
 
 const BASE_AREAS = [
-  "Mylapore", "Adyar", "Besant Nagar", "T Nagar", "Anna Nagar", "Velachery",
-  "Kodambakkam", "Villivakkam", "Tambaram", "Coimbatore", "Madurai",
+  "Mylapore",
+  "Adyar",
+  "Besant Nagar",
+  "T Nagar",
+  "Anna Nagar",
+  "Velachery",
+  "Kodambakkam",
+  "Villivakkam",
+  "Tambaram",
+  "Coimbatore",
+  "Madurai",
 ];
 
 /** Areas from live seller data, merged with the known Chennai/TN list. */
 export function areas(): string[] {
-  const live = allSellers().flatMap((s) => [s.area, s.city]).filter(Boolean);
+  const live = allSellers()
+    .flatMap((s) => [s.area, s.city])
+    .filter(Boolean);
   return Array.from(new Set([...live, ...BASE_AREAS]));
 }
 
@@ -290,11 +290,24 @@ export function searchSellers(f: SearchFilters): Seller[] {
     if (!q) return true;
     const category = categoryById(s.categoryId);
     const hay = [
-      s.businessName, s.ownerName, s.tagline, s.about, s.area, s.city,
-      s.instagram, s.tags.join(" "),
-      category?.name ?? "", category?.tamilName ?? "", category?.slug ?? "",
-      products.filter((p) => p.sellerId === s.id).map((p) => `${p.name} ${p.description}`).join(" "),
-    ].join(" ").toLowerCase();
+      s.businessName,
+      s.ownerName,
+      s.tagline,
+      s.about,
+      s.area,
+      s.city,
+      s.instagram,
+      s.tags.join(" "),
+      category?.name ?? "",
+      category?.tamilName ?? "",
+      category?.slug ?? "",
+      products
+        .filter((p) => p.sellerId === s.id)
+        .map((p) => `${p.name} ${p.description}`)
+        .join(" "),
+    ]
+      .join(" ")
+      .toLowerCase();
     return terms.some((t) => t && hay.includes(t));
   });
 
@@ -309,9 +322,7 @@ export function searchSellers(f: SearchFilters): Seller[] {
       list = list.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
       break;
     default:
-      list = list.sort(
-        (a, b) => Number(b.featured) - Number(a.featured) || b.rating - a.rating,
-      );
+      list = list.sort((a, b) => Number(b.featured) - Number(a.featured) || b.rating - a.rating);
   }
   return list;
 }
@@ -352,7 +363,19 @@ export function createEnquiry(input: Omit<Enquiry, "id" | "status" | "createdAt"
 }
 
 export function registerSeller(
-  input: Pick<Seller, "businessName" | "ownerName" | "categoryId" | "area" | "city" | "instagram" | "whatsapp" | "email" | "tagline" | "about"> & {
+  input: Pick<
+    Seller,
+    | "businessName"
+    | "ownerName"
+    | "categoryId"
+    | "area"
+    | "city"
+    | "instagram"
+    | "whatsapp"
+    | "email"
+    | "tagline"
+    | "about"
+  > & {
     priceFrom: number;
     imageUrl?: string | undefined;
   },
@@ -362,7 +385,10 @@ export function registerSeller(
   const seller: Seller = {
     ...rest,
     id: id("s_"),
-    slug: input.businessName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    slug: input.businessName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, ""),
     rating: 0,
     reviewCount: 0,
     featured: false,
@@ -500,5 +526,4 @@ export function removeCustomerAvatar(customerId: string) {
   });
 }
 
-export const inr = (n: number) =>
-  `₹${n.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
+export const inr = (n: number) => `₹${n.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;

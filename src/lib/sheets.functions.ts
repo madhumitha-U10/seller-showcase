@@ -23,10 +23,12 @@ export const fetchSheetBundle = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) =>
     z.object({ tables: z.array(z.enum(SHEET_TABLES)).min(1).max(6) }).parse(data),
   )
-  .handler(async ({ data }): Promise<{ rows: Record<string, SheetRow[]>; error?: string | undefined }> => {
-    const { readTables } = await import("@/lib/sheets-cache.server");
-    return readTables(data.tables);
-  });
+  .handler(
+    async ({ data }): Promise<{ rows: Record<string, SheetRow[]>; error?: string | undefined }> => {
+      const { readTables } = await import("@/lib/sheets-cache.server");
+      return readTables(data.tables);
+    },
+  );
 
 export const appendSheetRow = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) =>
@@ -50,7 +52,9 @@ export const appendSheetRow = createServerFn({ method: "POST" })
       if (!res.ok) return { ok: false, error: `HTTP ${res.status}` };
       try {
         const parsed = JSON.parse(text) as { success?: boolean; error?: string };
-        return parsed.success ? { ok: true } : { ok: false, error: parsed.error ?? "Write rejected" };
+        return parsed.success
+          ? { ok: true }
+          : { ok: false, error: parsed.error ?? "Write rejected" };
       } catch {
         return { ok: false, error: "Backend has no doPost handler yet" };
       }

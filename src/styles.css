@@ -154,10 +154,7 @@
 
 /* Subtle kolam dot-grid texture, used behind hero / section blocks */
 @utility kolam-grid {
-  background-image: radial-gradient(
-    var(--color-maroon) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(var(--color-maroon) 1px, transparent 1px);
   background-size: 22px 22px;
   opacity: 0.07;
 }
