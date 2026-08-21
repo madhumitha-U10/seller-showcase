@@ -11,22 +11,19 @@
  */
 
 import { supabase } from "@/integrations/supabase/client";
+import { checkImageFile, MAX_IMAGE_BYTES as MAX_BYTES } from "@/lib/validation";
 
 export const MEDIA_BUCKETS = ["seller-avatars", "product-images", "story-images"] as const;
 export type MediaBucket = (typeof MEDIA_BUCKETS)[number];
 
-export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
-const ALLOWED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/avif"];
+export const MAX_IMAGE_BYTES = MAX_BYTES;
 
 /** Throws a human-readable error when the file is not an acceptable image. */
 export function validateImageFile(file: File, maxBytes = MAX_IMAGE_BYTES) {
-  if (!file.type.startsWith("image/") || !ALLOWED_TYPES.includes(file.type.toLowerCase())) {
-    throw new Error("Please choose a JPG, PNG or WebP image");
-  }
-  if (file.size > maxBytes) {
-    throw new Error(`Image must be under ${Math.round(maxBytes / (1024 * 1024))}MB`);
-  }
+  const error = checkImageFile(file, maxBytes);
+  if (error) throw new Error(error);
 }
+
 
 function loadImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -108,19 +105,12 @@ export const uploadSellerAvatar = (file: File) =>
 
 /** Catalogue photo — aspect ratio preserved, stored at up to 1200px. */
 export const uploadProductImage = (file: File) =>
-  uploadToBucket("product-images", file, {
-    maxSide: 1200,
-    quality: 0.82,
-    maxBytes: 10 * 1024 * 1024,
-  });
+  uploadToBucket("product-images", file, { maxSide: 1200, quality: 0.82 });
 
 /** Story / editorial photo. */
 export const uploadStoryImage = (file: File) =>
-  uploadToBucket("story-images", file, {
-    maxSide: 1600,
-    quality: 0.82,
-    maxBytes: 10 * 1024 * 1024,
-  });
+  uploadToBucket("story-images", file, { maxSide: 1600, quality: 0.82 });
+
 
 export const uploadForBucket = (bucket: MediaBucket, file: File) =>
   bucket === "seller-avatars"
