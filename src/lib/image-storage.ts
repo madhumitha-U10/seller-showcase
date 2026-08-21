@@ -105,19 +105,12 @@ export const uploadSellerAvatar = (file: File) =>
 
 /** Catalogue photo — aspect ratio preserved, stored at up to 1200px. */
 export const uploadProductImage = (file: File) =>
-  uploadToBucket("product-images", file, {
-    maxSide: 1200,
-    quality: 0.82,
-    maxBytes: 10 * 1024 * 1024,
-  });
+  uploadToBucket("product-images", file, { maxSide: 1200, quality: 0.82 });
 
 /** Story / editorial photo. */
 export const uploadStoryImage = (file: File) =>
-  uploadToBucket("story-images", file, {
-    maxSide: 1600,
-    quality: 0.82,
-    maxBytes: 10 * 1024 * 1024,
-  });
+  uploadToBucket("story-images", file, { maxSide: 1600, quality: 0.82 });
+
 
 export const uploadForBucket = (bucket: MediaBucket, file: File) =>
   bucket === "seller-avatars"
