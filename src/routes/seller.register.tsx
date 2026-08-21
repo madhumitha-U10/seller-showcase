@@ -45,21 +45,29 @@ const schema = z.object({
   nammaspotId: z.string(),
   password: z.string(),
   confirmPassword: z.string(),
-  businessName: z.string().trim().min(2, "Business name is required").max(80),
-  ownerName: z.string().trim().min(2, "Owner name is required").max(80),
+  businessName: businessNameSchema,
+  ownerName: personNameSchema,
   categoryId: z.string().min(1, "Pick a category"),
   area: z.string().trim().min(2, "Enter your area").max(60),
-  city: z.string().trim().min(2).max(40),
-  instagram: z.string().trim().min(2, "Instagram handle is required").max(40),
-  whatsapp: z
-    .string()
-    .trim()
-    .regex(/^[0-9]{10,15}$/, "Digits only, with country code"),
-  email: z.string().trim().email("Enter a valid email").max(120),
+  city: z.string().trim().min(2, "Enter your city").max(40),
+  instagram: instagramSchema,
+  whatsapp: phoneSchema,
+  email: emailSchema,
   tagline: z.string().trim().min(6, "One line about your business").max(120),
   about: z.string().trim().min(20, "Tell customers a bit more").max(1000),
-  priceFrom: z.coerce.number().min(0).max(1000000),
+  priceFrom: z.coerce.number().min(0, "Enter a valid amount").max(1000000),
 });
+
+/** Per-field checks used on blur, so mistakes surface before submit. */
+const FIELD_CHECKS: Record<string, (value: string) => string | null> = {
+  businessName: (v) => (isBusinessName(v) ? null : BUSINESS_NAME_ERROR),
+  ownerName: (v) => (personNameSchema.safeParse(v).success ? null : "Enter your name"),
+  instagram: (v) => (isInstagramHandle(v) ? null : INSTAGRAM_ERROR),
+  whatsapp: (v) => (isIndianPhone(v) ? null : PHONE_ERROR),
+  email: (v) => (emailSchema.safeParse(v).success ? null : EMAIL_ERROR),
+  nammaspotId: (v) => validateNammaspotId(v),
+  password: (v) => validatePassword(v),
+};
 
 function RegisterSeller() {
   const navigate = useNavigate();
@@ -68,6 +76,21 @@ function RegisterSeller() {
   const [busy, setBusy] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
   const { data: cats } = useStoreData(categories);
+
+  const setFieldError = (field: string, message: string | null) =>
+    setErrors((prev) => {
+      const next = { ...prev };
+      if (message) next[field] = message;
+      else delete next[field];
+      return next;
+    });
+
+  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const check = FIELD_CHECKS[e.target.name];
+    if (!check) return;
+    const value = e.target.value;
+    setFieldError(e.target.name, value.trim() ? check(value) : null);
+  };
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,7 +107,7 @@ function RegisterSeller() {
       categoryId,
       area: fd.get("area"),
       city: fd.get("city"),
-      instagram: String(fd.get("instagram") ?? "").replace("@", ""),
+      instagram: fd.get("instagram"),
       whatsapp: fd.get("whatsapp"),
       email: fd.get("email"),
       tagline: fd.get("tagline"),
@@ -92,10 +115,7 @@ function RegisterSeller() {
       priceFrom: fd.get("priceFrom"),
     });
 
-    const next: Record<string, string> = {};
-    if (!parsed.success) {
-      for (const issue of parsed.error.issues) next[String(issue.path[0])] = issue.message;
-    }
+    const next: Record<string, string> = parsed.success ? {} : fieldErrors(parsed.error);
     const idError = validateNammaspotId(nammaspotId);
     if (idError) next["nammaspotId"] = idError;
     const pwError = validatePassword(password);
@@ -105,6 +125,7 @@ function RegisterSeller() {
 
     if (Object.keys(next).length || !parsed.success) {
       setErrors(next);
+      toast.error("Please fix the highlighted fields");
       return;
     }
     setErrors({});
@@ -132,8 +153,8 @@ function RegisterSeller() {
     navigate({ to: "/seller/dashboard" });
   };
 
-  const err = (k: string) =>
-    errors[k] ? <p className="mt-1 text-xs text-destructive">{errors[k]}</p> : null;
+  const err = (k: string) => <FieldError message={errors[k]} />;
+
 
   return (
     <SiteShell>
